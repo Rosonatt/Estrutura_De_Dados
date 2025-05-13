@@ -6,36 +6,36 @@ using namespace std;
 
 #define MAX_NODES 150  // Tamanho maximo da arvore
 
-//  Estrutura de um nó da Árvore AVL
+//  Estrutura de um nï¿½ da ï¿½rvore AVL
 struct Node {
-    int data; //  Valor do nó
+    int data; //  Valor do nï¿½
     int height; // Altura da arvore (muito importante para fazer o balanceamento)
-    int left;   //Índice do filho esquerdo
-    int right;  // Índice do filho direito
+    int left;   //ï¿½ndice do filho esquerdo
+    int right;  // ï¿½ndice do filho direito
 };
 
-// Cria o vetor para  guardar os nós  da arvore
+// Cria o vetor para  guardar os nï¿½s  da arvore
 vector<Node> tree(MAX_NODES);
-int nodeCount = 0;  // Conta  quantos nós foram inseridos
-
-// Função   que obtem a altura de um nó
+int nodeCount = 0;  // Conta  quantos nï¿½s foram inseridos
+P
+// Funï¿½ï¿½o   que obtem a altura de um nï¿½
 int height(int index) {
     return (index == -1) ? 0 : tree[index].height;
 }
 
-// Função que faz o calculo  do fator de balanceamento
+// Funï¿½ï¿½o que faz o calculo  do fator de balanceamento
 int getBalance(int index) {
     return (index == -1) ? 0 : height(tree[index].left) - height(tree[index].right);
 }
 
-// Cria  umnó novo e adiciona ele ao vetor
+// Cria  umnï¿½ novo e adiciona ele ao vetor
 int newNode(int data) {
     if (nodeCount >= MAX_NODES) return -1;
     tree[nodeCount] = {data, 1, -1, -1};
-    return nodeCount++;  // para retornar o indice do nó que foi criado
+    return nodeCount++;  // para retornar o indice do nï¿½ que foi criado
 }
 
-// Faz a rotação para a direita
+// Faz a rotaï¿½ï¿½o para a direita
 int rotateRight(int y) {
     int x = tree[y].left;
     tree[y].left = tree[x].right;
@@ -48,7 +48,7 @@ int rotateRight(int y) {
     return x;
 }
 
-// Faz a rotação para a esquerda
+// Faz a rotaï¿½ï¿½o para a esquerda
 int rotateLeft(int x) {
     int y = tree[x].right;
     tree[x].right = tree[y].left;
@@ -60,7 +60,7 @@ int rotateLeft(int x) {
     return y;
 }
 
-// Função para inserir um novo nó na Árvore AVL
+// Funï¿½ï¿½o para inserir um novo nï¿½ na ï¿½rvore AVL
 int insert(int root, int data) {
     if (root == -1) return newNode(data);
 
@@ -77,7 +77,7 @@ int insert(int root, int data) {
     //Faz o fator de balanceamento
     int balance = getBalance(root);
 
-    //   Rotaçãos
+    //   Rotaï¿½ï¿½os
     if (balance > 1 && data < tree[tree[root].left].data)
         return rotateRight(root);
     if (balance < -1 && data > tree[tree[root].right].data)
@@ -94,7 +94,7 @@ int insert(int root, int data) {
     return root;
 }
 
-// Função para remover um nó da Árvore AVL
+// Funï¿½ï¿½o para remover um nï¿½ da ï¿½rvore AVL
 int remove(int root, int data) {
     if (root == -1) return root;
 
@@ -103,19 +103,19 @@ int remove(int root, int data) {
     else if (data > tree[root].data)
         tree[root].right = remove(tree[root].right, data);
     else {
-        // Nó com apenas um filho ou com  nenhum
+        // Nï¿½ com apenas um filho ou com  nenhum
         if (tree[root].left == -1)
             return tree[root].right;
         else if (tree[root].right == -1)
             return tree[root].left;
 
-        // Nó com dois filhos: obtem o sucessor
+        // Nï¿½ com dois filhos: obtem o sucessor
         int minNode = tree[root].right;
         while (tree[minNode].left != -1) {
             minNode = tree[minNode].left;
         }
 
-        // Troca o valor do nó  quando é removido com o sucessor
+        // Troca o valor do nï¿½  quando ï¿½ removido com o sucessor
         tree[root].data = tree[minNode].data;
         // Remove o sucessor
         tree[root].right = remove(tree[root].right, tree[minNode].data);
@@ -124,10 +124,10 @@ int remove(int root, int data) {
     // Atualiza altura
     tree[root].height = 1 + max(height(tree[root].left), height(tree[root].right));
 
-    // Obtém o fator de balanceamento
+    // Obtï¿½m o fator de balanceamento
     int balance = getBalance(root);
 
-    // Casos de rotação
+    // Casos de rotaï¿½ï¿½o
     if (balance > 1 && getBalance(tree[root].left) >= 0)
         return rotateRight(root);
     if (balance > 1 && getBalance(tree[root].left) < 0) {
@@ -144,7 +144,7 @@ int remove(int root, int data) {
     return root;
 }
 
-// Imprime a árvore em ordem crescente
+// Imprime a ï¿½rvore em ordem crescente
 void sortedPrint(int root) {
     if (root != -1) {
         sortedPrint(tree[root].left);
@@ -153,7 +153,7 @@ void sortedPrint(int root) {
     }
 }
 
-// Imprime  o a parte visual da árvore AVL
+// Imprime  o a parte visual da ï¿½rvore AVL
 void printTree(int root, int space) {
     if (root == -1) return;
 
@@ -168,10 +168,10 @@ void printTree(int root, int space) {
     printTree(tree[root].left, space);
 }
 
-// Função principal
+// Funï¿½ï¿½o principal
 int main() {
     setlocale(LC_ALL, "Portuguese");
-    int root = -1; // Índice da raiz no vetor
+    int root = -1; // ï¿½ndice da raiz no vetor
 
     // Inserindo  os valores
     root = insert(root, 11);
@@ -184,25 +184,25 @@ int main() {
     root = insert(root, 12);
 
     // Imprime lista ordenada
-    cout << "\nÁrvore AVL ordenada em lista: ";
+    cout << "\nï¿½rvore AVL ordenada em lista: ";
     sortedPrint(root);
     cout << "\n";
 
-    // Imprime o desenho da  estrutura árvore
-    cout << "\nEstrutura da Árvore AVL:\n";
+    // Imprime o desenho da  estrutura ï¿½rvore
+    cout << "\nEstrutura da ï¿½rvore AVL:\n";
     printTree(root, 0);
 
     // Remove um valor
     root = remove(root, 14);
-    cout << "\nApós remover 14:\n";
+    cout << "\nApï¿½s remover 14:\n";
 
-    // Imprime a lista ordenada depois de fazer a remoção
-    cout << "Árvore AVL ordenada em lista: ";
+    // Imprime a lista ordenada depois de fazer a remoï¿½ï¿½o
+    cout << "ï¿½rvore AVL ordenada em lista: ";
     sortedPrint(root);
     cout << "\n";
 
-    // Imprime  a parte visual da árvore depois de fazer a remoção
-    cout << "\nEstrutura da Árvore AVL:\n";
+    // Imprime  a parte visual da ï¿½rvore depois de fazer a remoï¿½ï¿½o
+    cout << "\nEstrutura da ï¿½rvore AVL:\n";
     printTree(root, 0);
 
     return 0;
